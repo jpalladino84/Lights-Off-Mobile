@@ -1,0 +1,85 @@
+html,
+body {
+    height:100%;
+    font-size:12px;
+    width:100%;
+}
+
+html {
+    display:table;
+}
+
+body {
+    background-color:#A7A7A7;
+    background-image:linear-gradient(top, #A7A7A7 0%, #E4E4E4 51%);
+    background-image:-webkit-linear-gradient(top, #A7A7A7 0%, #E4E4E4 51%);
+    background-image:-ms-linear-gradient(top, #A7A7A7 0%, #E4E4E4 51%);
+    background-image:-webkit-gradient(
+        linear,
+        left top,
+        left bottom,
+        color-stop(0, #A7A7A7),
+        color-stop(0.51, #E4E4E4)
+    );
+    display:table-cell;
+    font-family:'HelveticaNeue-Light', 'HelveticaNeue', Helvetica, Arial, sans-serif;
+    text-transform:uppercase;
+    vertical-align:middle;
+}
+
+.app {
+    background-image:url(../img/cordova.png);
+    background-repeat:no-repeat;
+    margin:0px auto;
+    width:275px;
+}
+
+/* portrait */
+/* @media screen and (max-aspect-ratio: 1/1) */
+.app {
+    background-position:center top;
+    height:100px;              /* adds enough room for text */
+    padding:180px 0px 0px 0px; /* background height - shadow offset */
+}
+
+/* lanscape (when wide enough) */
+@media screen and (min-aspect-ratio: 1/1) and (min-width:445px) {
+    .app {
+        background-position:left center;
+        height:140px;       /* height + padding = background image size */
+        padding-left:170px; /* background width */
+        padding-top:60px;   /* center the text */
+    }
+}
+
+/**********
+ *	BOARD
+ **********/
+
+#game_wrapper #gameBoard{
+	background-image:url(../img/board.png);	
+	width:310px;
+	height:310px;
+	margin-top:0px auto;;
+}
+
+#game_wrapper .on{
+	background-image:url(../img/panel_off.png);
+	width:50px;
+	height:50px;
+	margin:6px;
+	float:left;
+}
+
+#game_wrapper .off{
+	background-image:url(../img/panel_on.png);
+	width:50px;
+	height:50px;
+	margin:6px;
+	float:left;
+}
+
+
+
+
+
