@@ -3,10 +3,12 @@
         xmlns:gap = "http://phonegap.com/ns/1.0"
         id        = "io.cordova.hello-cordova"
         version   = "2.0.0">
-    <name>Hello Cordova</name>
+    <name>Lights Off</name>
 
     <description>
-        A sample Apache Cordova application that responds to the deviceready event.
+        Can you turn the red panels to blue? 
+        
+        This game is similar to the old Light's Out Handheld game. 
     </description>
 
     <author href="http://cordova.io" email="callback-dev@incubator.apache.org">
