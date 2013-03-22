@@ -1,5 +1,8 @@
 
-var Panel = function(attr){
+var BoardManager = {};
+BoardManager.panels = [];
+
+BoardManager.Panel = function(attr){
 	this.id = attr.id;
 	this.state = attr.state;
 	this.north = (attr.north > 0) ? attr.north : null;
@@ -7,25 +10,25 @@ var Panel = function(attr){
 	this.east = (attr.east > 0 && attr.east <= 25) ? attr.east : null;
 	this.west = (attr.west > 0) ? attr.west : null;	
 }
-Panel.prototype.toggle = function toggle(){
+BoardManager.Panel.prototype.toggle = function toggle() {
 	this.state = !this.state;
 	$(this).trigger("TOGGLE_EVENT");	
 }
-Panel.prototype.setState = function setState(state){
+BoardManager.Panel.prototype.setState = function setState(state) {
 	this.state = state;
 	$(this).trigger("TOGGLE_EVENT");
 }
-Panel.prototype.getState = function getState(){
+BoardManager.Panel.prototype.getState = function getState() {
 	return this.state;
 }
 
-Panel.prototype.reset = function reset(){
+BoardManager.Panel.prototype.reset = function reset() {
 	this.state = false;	
 	$(this).trigger("TOGGLE_EVENT");
 }
-var panels = [];
-var board = {
-	panels: panels,
+
+BoardManager.board = {
+    panels: BoardManager.panels,
 	init: function(){
 		var borderEast = 0;
 		var borderWest = 0;
@@ -33,9 +36,9 @@ var board = {
 		for(var i = 1; i <= 25; i++){
 			borderEast++;
 			borderWest++;
-			var panel = new Panel({id:"panel"+i,state:false,north:i-5,east:i+1,south:i+5,west:i-1});
+			var panel = new BoardManager.Panel({ id: "panel" + i, state: false, north: i - 5, east: i + 1, south: i + 5, west: i - 1 });
 			$(panel).bind("TOGGLE_EVENT",function(){
-				board.draw_panels(this);  			
+			    BoardManager.board.draw_panels(this);
 			})
 			this.panels.push(panel);
 			
@@ -47,13 +50,13 @@ var board = {
 			$('#'+panelElem.id).live("tap", function(event){	
 				var panelId = event.target.id
 				var panel;
-				for(var i in board.panels){
-					if(board.panels[i].id === panelId) {
-						panel = board.panels[i];
+				for (var i in BoardManager.board.panels) {
+				    if (BoardManager.board.panels[i].id === panelId) {
+				        panel = BoardManager.board.panels[i];
 						break;
 					}
 				}					
-				board.toggle_panels(panel);			
+				BoardManager.board.toggle_panels(panel);			
 			})
 			
 			if(borderEast % 5 == 0)
@@ -94,12 +97,57 @@ var board = {
 			this.panels[panel.west-1].toggle();		
 		}												
 	},
-	resetBoard: function(){
-		for(var i in this.panels){
-			if(this.panels[i].state)
-				this.panels[i].reset();	
-		}
+	resetBoard: function () {
+	    if (LevelManager.CurrentLevel) {
+	        for (var i in this.panels) {
+	            if (this.panels[i].state)
+	                this.panels[i].reset();
+	        }
+	        LevelManager.Level.init(LevelManager.CurrentLevel);
+	        return;
+	    } else {
+	        for (var i in this.panels) {
+	            if (this.panels[i].state)
+	                this.panels[i].reset();
+	        }
+	    }
 	}	
 }
 
+var LevelManager = {};
+LevelManager.CurrentLevel = {};
+LevelManager.Level =  {
+    id: "",
+    init : function(level) {
+        this.id = level.name;
+        this.pattern = level.pattern;
 
+        BoardManager.board.setPanels(this.pattern);
+        LevelManager.CurrentLevel = level;
+    }
+}
+
+LevelManager.Level1 = {
+    name: "Level 1",
+    pattern: [7, 11, 12, 13, 17]
+};
+
+LevelManager.Level2 = {
+    name: "Level 2",
+    pattern: [0, 1, 3, 4, 5, 9, 15, 19, 20, 21, 23, 24]
+};
+
+LevelManager.Level3 = {
+    name: "Level 3",
+    pattern: [0, 4, 6, 8, 16, 18, 20, 24]
+}
+
+LevelManager.Level4 = {
+    name: "Level 4",
+    pattern: [2, 10, 14, 22]
+}
+
+LevelManager.Level5 = {
+    name: "Level 5",
+    pattern: [12]
+}

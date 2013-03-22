@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -20,11 +20,26 @@
                     <div id="gameBoard"></div>				
                 </div>	 		
                 
+                
                 <a href="#resetDialog" data-rel="dialog" data-transition="slidedown" data-role="button">Reset</a>
+                <a href="#levelSelect" data-rel="dialog" data-transition="slidedown" data-role="button">Select Level</a>
             </div><!-- /content -->
         
         </div><!-- /page -->
         
+        <div id="levelSelect" data-role="page">
+            <div data-role="header">
+                <h1>Select a Level</h1>
+            </div>
+            <div data-role="content">
+                <a id="Level1" href="#" data-role="button">Level 1</a>
+                <a id="Level2" href="#" data-role="button">Level 2</a>
+                <a id="Level3" href="#" data-role="button">Level 3</a>
+                <a id="Level4" href="#" data-role="button">Level 4</a>
+                <a id="Level5" href="#" data-role="button">Level 5</a>
+            </div>
+        </div>
+
         <div id="resetDialog" data-role="page">
             <div data-role="header">
                 <h1>Reset?</h1>
@@ -41,17 +56,39 @@
         <script type="text/javascript" src="js/main.js"></script>
         <script type="text/javascript">
         	$(document).delegate("#board", "pageinit", function(){
-				board.init();
+				BoardManager.board.init();
 			});
 			$(document).delegate("#resetDialog", "pageinit", function(){
 				$("#resetBtn").live("tap", function(){
-					board.resetBoard();	
+				    BoardManager.board.resetBoard();
 					$('.ui-dialog').dialog('close');
 				});	
 				$("#cancelBtn").live("tap", function(){
 					$('.ui-dialog').dialog('close');
 				});	
 			});
+			$(document).delegate("#levelSelect", "pageinit", function() {
+			    $("#Level1").live("tap", function() {
+			        LevelManager.Level.init(LevelManager.Level1);
+			        $('.ui-dialog').dialog('close');
+			    })
+			    $("#Level2").live("tap", function () {
+			        LevelManager.Level.init(LevelManager.Level2);
+			        $('.ui-dialog').dialog('close');
+			    })
+			    $("#Level3").live("tap", function () {
+			        LevelManager.Level.init(LevelManager.Level3);
+			        $('.ui-dialog').dialog('close');
+			    })
+			    $("#Level4").live("tap", function () {
+			        LevelManager.Level.init(LevelManager.Level4);
+			        $('.ui-dialog').dialog('close');
+			    })
+			    $("#Level5").live("tap", function () {
+			        LevelManager.Level.init(LevelManager.Level5);
+			        $('.ui-dialog').dialog('close');
+			    })
+			})
         </script>
     </body>
 </html>
