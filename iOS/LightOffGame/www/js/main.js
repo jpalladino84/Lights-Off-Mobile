@@ -97,15 +97,15 @@ BoardManager.board = {
 			this.panels[panel.west-1].toggle();		
 		}												
 	},
-	resetBoard: function () {
-	    if (LevelManager.CurrentLevel) {
+	resetBoard: function (override) {
+	    if (LevelManager.CurrentLevel && !override) {
 	        for (var i in this.panels) {
 	            if (this.panels[i].state)
 	                this.panels[i].reset();
 	        }
 	        LevelManager.Level.init(LevelManager.CurrentLevel);
 	        return;
-	    } else {
+	    } else if (override){
 	        for (var i in this.panels) {
 	            if (this.panels[i].state)
 	                this.panels[i].reset();
@@ -122,6 +122,7 @@ LevelManager.Level =  {
         this.id = level.name;
         this.pattern = level.pattern;
 
+        BoardManager.board.resetBoard(true);
         BoardManager.board.setPanels(this.pattern);
         LevelManager.CurrentLevel = level;
     }

@@ -60,7 +60,7 @@
 			});
 			$(document).delegate("#resetDialog", "pageinit", function(){
 				$("#resetBtn").live("tap", function(){
-				    BoardManager.board.resetBoard();
+				    BoardManager.board.resetBoard(false);
 					$('.ui-dialog').dialog('close');
 				});	
 				$("#cancelBtn").live("tap", function(){
