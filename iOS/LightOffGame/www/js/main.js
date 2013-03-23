@@ -2,29 +2,32 @@
 var BoardManager = {};
 BoardManager.panels = [];
 
-BoardManager.Panel = function(attr){
-	this.id = attr.id;
-	this.state = attr.state;
-	this.north = (attr.north > 0) ? attr.north : null;
-	this.south = (attr.south > 0 && attr.south <= 25) ? attr.south : null;
-	this.east = (attr.east > 0 && attr.east <= 25) ? attr.east : null;
-	this.west = (attr.west > 0) ? attr.west : null;	
-}
-BoardManager.Panel.prototype.toggle = function toggle() {
-	this.state = !this.state;
-	$(this).trigger("TOGGLE_EVENT");	
-}
-BoardManager.Panel.prototype.setState = function setState(state) {
-	this.state = state;
-	$(this).trigger("TOGGLE_EVENT");
-}
-BoardManager.Panel.prototype.getState = function getState() {
-	return this.state;
-}
-
-BoardManager.Panel.prototype.reset = function reset() {
-	this.state = false;	
-	$(this).trigger("TOGGLE_EVENT");
+BoardManager.Panel = {
+	init: function(attr){
+		return {
+			id : attr.id,
+			state : attr.state,
+			north : (attr.north > 0) ? attr.north : null,
+			south : (attr.south > 0 && attr.south <= 25) ? attr.south : null,
+			east : (attr.east > 0 && attr.east <= 25) ? attr.east : null,
+			west : (attr.west > 0) ? attr.west : null,
+			toggle: function() {
+				this.state = !this.state;
+				$(this).trigger("TOGGLE_EVENT");	
+			},
+			setState: function(state) {
+				this.state = state;
+				$(this).trigger("TOGGLE_EVENT");
+			},
+			getState: function() {
+				return this.state;
+			},
+			reset: function() {
+				this.state = false;	
+				$(this).trigger("TOGGLE_EVENT");
+			}
+		}
+	}
 }
 
 BoardManager.board = {
@@ -36,7 +39,7 @@ BoardManager.board = {
 		for(var i = 1; i <= 25; i++){
 			borderEast++;
 			borderWest++;
-			var panel = new BoardManager.Panel({ id: "panel" + i, state: false, north: i - 5, east: i + 1, south: i + 5, west: i - 1 });
+			var panel = BoardManager.Panel.init({ id: "panel" + i, state: false, north: i - 5, east: i + 1, south: i + 5, west: i - 1 });
 			$(panel).bind("TOGGLE_EVENT",function(){
 			    BoardManager.board.draw_panels(this);
 			})
@@ -145,10 +148,10 @@ LevelManager.Level3 = {
 
 LevelManager.Level4 = {
     name: "Level 4",
-    pattern: [2, 10, 14, 22]
+    pattern: [0, 1, 3, 4, 10, 11, 13, 14, 20, 21, 23, 24]
 }
 
 LevelManager.Level5 = {
     name: "Level 5",
-    pattern: [12]
+    pattern: [1, 5, 7, 11, 13, 17, 19, 23]
 }
