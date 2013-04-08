@@ -21,8 +21,9 @@
                 </div>	 		
                 
                 
-                <a href="#resetDialog" data-rel="dialog" data-transition="slidedown" data-role="button">Reset</a>
-                <a href="#levelSelect" data-rel="dialog" data-transition="slidedown" data-role="button">Select Level</a>
+                <a href="#resetDialog" data-rel="dialog" data-transition="flip" data-role="button">Reset</a>
+                <a href="#levelSelect" data-rel="dialog" data-transition="flip" data-role="button">Select Level</a>
+                <a href="#levelSummary" data-rel="dialog" data-transition="flip" data-role="button">Level Complete</a>
             </div><!-- /content -->
         
         </div><!-- /page -->
@@ -46,8 +47,18 @@
             </div>
             <div data-role="content">
                 <p> Are you sure you want to reset this game?</p>
-               <a id="resetBtn" href="#" data-role="button">Yes</a>
-               <a id="cancelBtn" href="#" data-role="button">No</a>
+                <a id="resetBtn" href="#" data-role="button">Yes</a>
+                <a id="cancelBtn" href="#" data-role="button">No</a>
+            </div>
+        </div>
+        
+        <div id="levelSummary" data-role="page">
+            <div data-role="header">
+                <h1>Level Complete</h1>
+            </div>
+            <div data-role="content">
+                <p>Congratulations!</p>
+                <a id="nextLevel" href="#" data-role="button">Next Level</a>
             </div>
         </div>
         

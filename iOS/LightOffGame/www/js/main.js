@@ -13,7 +13,7 @@ BoardManager.Panel = {
 			west : (attr.west > 0) ? attr.west : null,
 			toggle: function() {
 				this.state = !this.state;
-				$(this).trigger("TOGGLE_EVENT");	
+				$(this).trigger("TOGGLE_EVENT");			    
 			},
 			setState: function(state) {
 				this.state = state;
@@ -40,9 +40,9 @@ BoardManager.board = {
 			borderEast++;
 			borderWest++;
 			var panel = BoardManager.Panel.init({ id: "panel" + i, state: false, north: i - 5, east: i + 1, south: i + 5, west: i - 1 });
-			$(panel).bind("TOGGLE_EVENT",function(){
-			    BoardManager.board.draw_panels(this);
-			})
+		    $(panel).bind("TOGGLE_EVENT", function() {
+		        this.draw_panels(this);
+		    });
 			this.panels.push(panel);
 			
 			var panelElem = document.createElement('div');
@@ -50,9 +50,9 @@ BoardManager.board = {
 	
 			$("#gameBoard")[0].appendChild(panelElem);
 			
-			$('#'+panelElem.id).live("tap", function(event){	
-				var panelId = event.target.id
-				var panel;
+			$('#'+panelElem.id).live("tap", function(event) {
+			    var panelId = event.target.id, panel = {};
+			    
 				for (var i in BoardManager.board.panels) {
 				    if (BoardManager.board.panels[i].id === panelId) {
 				        panel = BoardManager.board.panels[i];
@@ -119,39 +119,48 @@ BoardManager.board = {
 
 var LevelManager = {};
 LevelManager.CurrentLevel = {};
-LevelManager.Level =  {
+LevelManager.Level = {
     id: "",
-    init : function(level) {
+    score: 0,
+    init: function(level) {
         this.id = level.name;
         this.pattern = level.pattern;
 
         BoardManager.board.resetBoard(true);
         BoardManager.board.setPanels(this.pattern);
         LevelManager.CurrentLevel = level;
+        $(level).bind("LEVEL_COMPLETE", function() {
+            $.mobile.changePage($("#levelSummary"), "flip");
+        });
     }
-}
+};
 
 LevelManager.Level1 = {
     name: "Level 1",
-    pattern: [7, 11, 12, 13, 17]
+    pattern: [7, 11, 12, 13, 17],
+    moves: 1
 };
 
 LevelManager.Level2 = {
     name: "Level 2",
-    pattern: [0, 1, 3, 4, 5, 9, 15, 19, 20, 21, 23, 24]
+    pattern: [0, 1, 3, 4, 5, 9, 15, 19, 20, 21, 23, 24],
+    moves: 4
 };
 
 LevelManager.Level3 = {
     name: "Level 3",
-    pattern: [0, 4, 6, 8, 16, 18, 20, 24]
+    pattern: [0, 4, 6, 8, 16, 18, 20, 24],
+    moves: 4
 }
 
 LevelManager.Level4 = {
     name: "Level 4",
-    pattern: [0, 1, 3, 4, 10, 11, 13, 14, 20, 21, 23, 24]
+    pattern: [0, 1, 3, 4, 10, 11, 13, 14, 20, 21, 23, 24],
+    moves: 6
 }
 
 LevelManager.Level5 = {
     name: "Level 5",
-    pattern: [1, 5, 7, 11, 13, 17, 19, 23]
+    pattern: [1, 5, 7, 11, 13, 17, 19, 23],
+    moves: 8
 }
