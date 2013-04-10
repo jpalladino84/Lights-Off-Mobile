@@ -1,6 +1,7 @@
 
 var BoardManager = {};
 BoardManager.panels = [];
+BoardManager.activePanels = [];
 
 BoardManager.Panel = {
 	init: function(attr){
@@ -41,7 +42,7 @@ BoardManager.board = {
 			borderWest++;
 			var panel = BoardManager.Panel.init({ id: "panel" + i, state: false, north: i - 5, east: i + 1, south: i + 5, west: i - 1 });
 		    $(panel).bind("TOGGLE_EVENT", function() {
-		        this.draw_panels(this);
+		        BoardManager.board.draw_panels(this);
 		    });
 			this.panels.push(panel);
 			
@@ -50,17 +51,22 @@ BoardManager.board = {
 	
 			$("#gameBoard")[0].appendChild(panelElem);
 			
-			$('#'+panelElem.id).live("tap", function(event) {
+			$('#' + panelElem.id).live("tap", function (event) {
 			    var panelId = event.target.id, panel = {};
-			    
-				for (var i in BoardManager.board.panels) {
-				    if (BoardManager.board.panels[i].id === panelId) {
-				        panel = BoardManager.board.panels[i];
-						break;
-					}
-				}					
-				BoardManager.board.toggle_panels(panel);			
-			})
+
+			    for (var i in BoardManager.board.panels) {
+			        if (BoardManager.board.panels[i].id === panelId) {
+			            panel = BoardManager.board.panels[i];
+			            break;
+			        }
+			    }
+			    BoardManager.board.toggle_panels(panel);
+
+			    if (BoardManager.board.checkBoardStatus()) {
+			        $(LevelManager.CurrentLevel).trigger("LEVEL_COMPLETE");
+			        
+			    }
+			});
 			
 			if(borderEast % 5 == 0)
 				panel.east = null;
@@ -88,7 +94,7 @@ BoardManager.board = {
 	toggle_panels: function(panel){	
 		panel.toggle();
 		if(panel.north){
-			this.panels[panel.north-1].toggle();
+		    this.panels[panel.north - 1].toggle();
 		}
 		if(panel.south){
 			this.panels[panel.south-1].toggle();
@@ -96,9 +102,9 @@ BoardManager.board = {
 		if(panel.east){
 			this.panels[panel.east-1].toggle();
 		}
-		if(panel.west){
-			this.panels[panel.west-1].toggle();		
-		}												
+	    if (panel.west) {
+	        this.panels[panel.west - 1].toggle();
+	    }
 	},
 	resetBoard: function (override) {
 	    if (LevelManager.CurrentLevel && !override) {
@@ -114,52 +120,72 @@ BoardManager.board = {
 	                this.panels[i].reset();
 	        }
 	    }
-	}	
+	    BoardManager.activePanels = [];
+	},
+	checkBoardStatus: function () {
+	    for (var i in BoardManager.board.panels)
+	        if (BoardManager.board.panels[i].state)
+	            return false;
+
+	    return true;
+	}
 }
 
 var LevelManager = {};
 LevelManager.CurrentLevel = {};
 LevelManager.Level = {
-    id: "",
+    id: 0,
+    name: "",
     score: 0,
     init: function(level) {
-        this.id = level.name;
+        this.id = level.id;
+        this.name = level.name;
         this.pattern = level.pattern;
 
         BoardManager.board.resetBoard(true);
         BoardManager.board.setPanels(this.pattern);
         LevelManager.CurrentLevel = level;
-        $(level).bind("LEVEL_COMPLETE", function() {
-            $.mobile.changePage($("#levelSummary"), "flip");
+        $(LevelManager.CurrentLevel).bind("LEVEL_COMPLETE", function (e) {
+            $.mobile.changePage($("#levelSummary"), "pop");            
         });
+        BoardManager.activePanels = [];
     }
 };
 
+LevelManager.getLevel = function(levelId) {
+    return LevelManager["Level" + levelId];
+};
+
 LevelManager.Level1 = {
+    id: 1,
     name: "Level 1",
     pattern: [7, 11, 12, 13, 17],
     moves: 1
 };
 
 LevelManager.Level2 = {
+    id: 2,
     name: "Level 2",
     pattern: [0, 1, 3, 4, 5, 9, 15, 19, 20, 21, 23, 24],
     moves: 4
 };
 
 LevelManager.Level3 = {
+    id: 3,
     name: "Level 3",
     pattern: [0, 4, 6, 8, 16, 18, 20, 24],
     moves: 4
 }
 
 LevelManager.Level4 = {
+    id: 4,
     name: "Level 4",
     pattern: [0, 1, 3, 4, 10, 11, 13, 14, 20, 21, 23, 24],
     moves: 6
 }
 
 LevelManager.Level5 = {
+    id: 5,
     name: "Level 5",
     pattern: [1, 5, 7, 11, 13, 17, 19, 23],
     moves: 8
