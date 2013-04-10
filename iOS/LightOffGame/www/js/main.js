@@ -2,6 +2,7 @@
 var BoardManager = {};
 BoardManager.panels = [];
 BoardManager.activePanels = [];
+BoardManager.freeplay = false;
 
 BoardManager.Panel = {
 	init: function(attr){
@@ -62,7 +63,7 @@ BoardManager.board = {
 			    }
 			    BoardManager.board.toggle_panels(panel);
 
-			    if (BoardManager.board.checkBoardStatus()) {
+			    if (BoardManager.board.checkBoardStatus() && !BoardManager.freeplay) {
 			        $(LevelManager.CurrentLevel).trigger("LEVEL_COMPLETE");
 			        
 			    }
@@ -142,9 +143,11 @@ LevelManager.Level = {
         this.name = level.name;
         this.pattern = level.pattern;
 
+        BoardManager.freeplay = false;
         BoardManager.board.resetBoard(true);
         BoardManager.board.setPanels(this.pattern);
-        LevelManager.CurrentLevel = level;
+        $(LevelManager.CurrentLevel).unbind("LEVEL_COMPLETE");
+        LevelManager.CurrentLevel = level;        
         $(LevelManager.CurrentLevel).bind("LEVEL_COMPLETE", function (e) {
             $.mobile.changePage($("#levelSummary"), "pop");            
         });

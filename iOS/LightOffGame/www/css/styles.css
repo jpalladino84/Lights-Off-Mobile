@@ -28,7 +28,7 @@ body {
 }
 
 .app {
-    background-image:url(../img/cordova.png);
+    background-image:url(../images/cordova.png);
     background-repeat:no-repeat;
     margin:0px auto;
     width:275px;
@@ -52,19 +52,52 @@ body {
     }
 }
 
+@media (min-width:35em) {
+ 
+    /* wrap on wide viewports once open */
+ 
+    .ui-responsive-panel.ui-page-panel-open .ui-panel-content-fixed-toolbar-display-push.ui-panel-content-fixed-toolbar-position-left,
+    .ui-responsive-panel.ui-page-panel-open .ui-panel-content-fixed-toolbar-display-reveal.ui-panel-content-fixed-toolbar-position-left,
+    .ui-responsive-panel.ui-page-panel-open .ui-panel-content-wrap-display-push.ui-panel-content-wrap-position-left,
+    .ui-responsive-panel.ui-page-panel-open .ui-panel-content-wrap-display-reveal.ui-panel-content-wrap-position-left {
+        margin-right: 17em;
+    }
+    .ui-responsive-panel.ui-page-panel-open .ui-panel-content-fixed-toolbar-display-push.ui-panel-content-fixed-toolbar-position-right,
+    .ui-responsive-panel.ui-page-panel-open .ui-panel-content-fixed-toolbar-display-reveal.ui-panel-content-fixed-toolbar-position-right,
+    .ui-responsive-panel.ui-page-panel-open .ui-panel-content-wrap-display-push.ui-panel-content-wrap-position-right,
+    .ui-responsive-panel.ui-page-panel-open .ui-panel-content-wrap-display-reveal.ui-panel-content-wrap-position-right {
+        margin-left: 17em;
+    }
+    .ui-responsive-panel.ui-page-panel-open .ui-panel-content-fixed-toolbar-display-push,
+    .ui-responsive-panel.ui-page-panel-open .ui-panel-content-fixed-toolbar-display-reveal {
+        width: auto;	
+    }
+ 
+    /* disable "dismiss" on wide viewports */
+    .ui-responsive-panel .ui-panel-dismiss-display-push {
+        display: none;
+    }
+ 
+}
+
 /**********
  *	BOARD
  **********/
+.homebg {
+    background-image: url(../images/splash.jpg);
+    width: 320px;
+    height: 318px;
+}
 
 #game_wrapper #gameBoard{
-	background-image:url(../img/board.png);	
+	background-image:url(../images/board.png);	
 	width:310px;
 	height:310px;
-	margin-top:0px auto;;
+	margin:0px auto;
 }
 
 #game_wrapper .on{
-	background-image:url(../img/panel_off.png);
+	background-image:url(../images/panel_off.png);
 	width:50px;
 	height:50px;
 	margin:6px;
@@ -72,7 +105,7 @@ body {
 }
 
 #game_wrapper .off{
-	background-image:url(../img/panel_on.png);
+	background-image:url(../images/panel_on.png);
 	width:50px;
 	height:50px;
 	margin:6px;
