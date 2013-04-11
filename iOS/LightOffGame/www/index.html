@@ -9,45 +9,45 @@
         <title>Lights Off Game</title>
     </head>
     <body>
-        
+
         <div data-role="page" id="home">
             <!--<div data-role="header">
                 <h1>Lights Off</h1>
-            </div>-->            
-            <div data-role="content">	                
+            </div>-->
+            <div data-role="content">
                 <div class="homebg"></div>
-            </div>     
+            </div>
             <div data-role="footer">
-                <div id="menu" data-role="controlgroup">		
+                <div id="menu" data-role="controlgroup">
                     <a id="startBtn" href="#" data-role="button">Start</a>
                 </div>
                 <div id="menu" data-role="controlgroup">
-                    <a href="#levelSelect" data-rel="dialog" data-transition="flip" data-role="button">Select Level</a> 
+                    <a href="#levelSelect" data-rel="dialog" data-transition="flip" data-role="button">Select Level</a>
                 </div>
-                <div id="menu" data-role="controlgroup"> 
-                    <a id="freeplay" href="#" data-role="button">Free Play</a>                  
+                <div id="menu" data-role="controlgroup">
+                    <a id="freeplay" href="#" data-role="button">Free Play</a>
                 </div>
-            </div>       
+            </div>
         </div>
 
         <div data-role="page" id="board">
             <div data-role="panel" id="optionPanel" data-display="push" data-dismissible="true" data-theme="a">
                 <a href="#home" data-icon="home" data-role="button">Home</a>
-                <a href="#resetDialog" data-icon="back" data-rel="dialog" data-transition="flip" data-role="button">Reset</a>  
+                <a href="#resetDialog" data-icon="back" data-rel="dialog" data-transition="flip" data-role="button">Reset</a>
             </div>
             <div data-role="header">
-                
+
                 <a href="#optionPanel" data-rel="panel" data-icon="bars" data-role="button">Menu</a>
 
                 <h1>Lights Off</h1>
-            </div>        
-            <div data-role="content">	
-               	<div id="game_wrapper">		
-                    <div id="gameBoard"></div>				
-                </div>	 		                                                                                                             
-            </div>        
+            </div>
+            <div data-role="content">
+               	<div id="game_wrapper">
+                    <div id="gameBoard"></div>
+                </div>
+            </div>
         </div>
-        
+
         <div id="levelSelect" data-role="dialog">
             <div data-role="header">
                 <h1>Select a Level</h1>
@@ -71,21 +71,21 @@
                 <a id="cancelBtn" href="#" data-icon="delete" data-role="button">No</a>
             </div>
         </div>
-        
+
         <div id="levelSummary" data-role="dialog">
-            <div data-role="header">                
+            <div data-role="header">
                 <h1>Level Complete</h1>
             </div>
             <div data-role="content">
                 <p>Congratulations!</p>
-                <a id="nextLevel" href="#" data-icon="arrow-r" data-role="button">Next Level</a>                
+                <a id="nextLevel" href="#" data-icon="arrow-r" data-role="button">Next Level</a>
                 <a id="replayLevel" href="#" data-icon="back" data-role="button">Replay Level</a>
                 <a id="homebtn" href="#" data-icon="home" data-role="button">Home</a>
             </div>
         </div>
-        
+
         <div id="gameSummary" data-role="dialog">
-            <div data-role="header">                
+            <div data-role="header">
                 <h1>Game Complete</h1>
             </div>
             <div data-role="content">
@@ -93,48 +93,48 @@
                 <a href="#home" data-role="button">Home</a>
             </div>
         </div>
-        
+
         <script type="text/javascript" src="js/jquery-1.8.0.min.js"></script>
         <script type="text/javascript" src="js/jquery.mobile-1.3.0.min.js"></script>
         <script type="text/javascript" src="js/main.js"></script>
         <script type="text/javascript">
             $(document).delegate("#home", "pageinit", function () {
-                $("#startBtn").on("tap", function () {                    
+                $("#startBtn").on("click", function () {
                     $.mobile.changePage("#board");
                     LevelManager.Level.init(LevelManager.Level1);
                 });
-                $("#freeplay").on('tap', function () {
+                $("#freeplay").on('click', function () {
                     $(LevelManager.CurrentLevel).unbind("LEVEL_COMPLETE");
                     BoardManager.board.resetBoard(true);
                     BoardManager.freeplay = true;
                     $.mobile.changePage('#board');
                 });
-                $("#Level1").on("tap", function () {
+                $("#Level1").on("click", function () {
                     $.mobile.changePage("#board");
-                    LevelManager.Level.init(LevelManager.Level1);                    
+                    LevelManager.Level.init(LevelManager.Level1);
                 })
-                $("#Level2").on("tap", function () {
+                $("#Level2").on("click", function () {
                     $.mobile.changePage("#board");
-                    LevelManager.Level.init(LevelManager.Level2);                    
+                    LevelManager.Level.init(LevelManager.Level2);
                 })
-                $("#Level3").on("tap", function () {
+                $("#Level3").on("click", function () {
                     $.mobile.changePage("#board");
-                    LevelManager.Level.init(LevelManager.Level3);                   
+                    LevelManager.Level.init(LevelManager.Level3);
                 })
-                $("#Level4").on("tap", function () {
+                $("#Level4").on("click", function () {
                     $.mobile.changePage("#board");
-                    LevelManager.Level.init(LevelManager.Level4);                    
+                    LevelManager.Level.init(LevelManager.Level4);
                 })
-                $("#Level5").on("tap", function () {
+                $("#Level5").on("click", function () {
                     $.mobile.changePage("#board");
-                    LevelManager.Level.init(LevelManager.Level5);                    
+                    LevelManager.Level.init(LevelManager.Level5);
                 })
             });
 
             $(document).delegate("#board", "pageinit", function () {
         	    BoardManager.board.init();
-        	    
-        	    $("#nextLevel").on("tap", function () {        	               	        
+
+        	    $("#nextLevel").on("click", function () {
         	        var nextLevel = LevelManager.getLevel(LevelManager.CurrentLevel.id + 1)
         	        if (nextLevel) {
         	            $.mobile.changePage("#board");
@@ -143,25 +143,25 @@
         	            $.mobile.changePage($("#gameSummary"), "pop");
         	        }
         	    });
-        	    $("#homebtn").on('tap', function () {
+        	    $("#homebtn").on('click', function () {
         	        $.mobile.changePage("#home");
         	    })
-                $("#replayLevel").on('tap',function() {                   
+                $("#replayLevel").on('click',function() {
                     $.mobile.changePage("#board");
                     LevelManager.Level.init(LevelManager.CurrentLevel);
                 })
-        	    $("#resetbtn").on("tap", function () {
+        	    $("#resetBtn").on("click", function () {
         	        BoardManager.board.resetBoard(false);
         	        $.mobile.changePage("#board");
         	    });
-        	    $("#cancelBtn").on("tap", function () {
+        	    $("#cancelBtn").on("click", function () {
         	        $.mobile.changePage("#board");
         	    });
 			});
-			
-						
-			
-			
+
+
+
+
         </script>
     </body>
 </html>
