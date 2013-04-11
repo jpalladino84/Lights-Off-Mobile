@@ -42,7 +42,7 @@ BoardManager.board = {
 			borderEast++;
 			borderWest++;
 			var panel = BoardManager.Panel.init({ id: "panel" + i, state: false, north: i - 5, east: i + 1, south: i + 5, west: i - 1 });
-		    $(panel).bind("TOGGLE_EVENT", function() {
+		    $(panel).bind("TOGGLE_EVENT", function(e) {
 		        BoardManager.board.draw_panels(this);
 		    });
 			this.panels.push(panel);
@@ -52,7 +52,8 @@ BoardManager.board = {
 
 			$("#gameBoard")[0].appendChild(panelElem);
 
-			$('#' + panelElem.id).live("tap", function (event) {
+			$('#' + panelElem.id).on("tap", function (event) {
+					event.preventDefault();
 			    var panelId = event.target.id, panel = {};
 
 			    for (var i in BoardManager.board.panels) {
