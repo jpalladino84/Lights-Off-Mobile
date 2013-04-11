@@ -15,7 +15,7 @@ BoardManager.Panel = {
 			west : (attr.west > 0) ? attr.west : null,
 			toggle: function() {
 				this.state = !this.state;
-				$(this).trigger("TOGGLE_EVENT");			    
+				$(this).trigger("TOGGLE_EVENT");
 			},
 			setState: function(state) {
 				this.state = state;
@@ -25,7 +25,7 @@ BoardManager.Panel = {
 				return this.state;
 			},
 			reset: function() {
-				this.state = false;	
+				this.state = false;
 				$(this).trigger("TOGGLE_EVENT");
 			}
 		}
@@ -37,7 +37,7 @@ BoardManager.board = {
 	init: function(){
 		var borderEast = 0;
 		var borderWest = 0;
-		
+
 		for(var i = 1; i <= 25; i++){
 			borderEast++;
 			borderWest++;
@@ -46,12 +46,12 @@ BoardManager.board = {
 		        BoardManager.board.draw_panels(this);
 		    });
 			this.panels.push(panel);
-			
+
 			var panelElem = document.createElement('div');
-			panelElem.id = "panel"+i;		
-	
+			panelElem.id = "panel"+i;
+
 			$("#gameBoard")[0].appendChild(panelElem);
-			
+
 			$('#' + panelElem.id).live("tap", function (event) {
 			    var panelId = event.target.id, panel = {};
 
@@ -65,24 +65,23 @@ BoardManager.board = {
 
 			    if (BoardManager.board.checkBoardStatus() && !BoardManager.freeplay) {
 			        $(LevelManager.CurrentLevel).trigger("LEVEL_COMPLETE");
-			        
 			    }
 			});
-			
+
 			if(borderEast % 5 == 0)
 				panel.east = null;
-			
+
 			if(borderWest % 5 == 1)
 				panel.west = null;
-			
+
 			this.draw_panels(panel);
 		}
 	},
-	draw_panels: function(panel){			
-		$("#"+panel.id).removeClass(!panel.state ? "on" : "off").addClass(panel.state ? "on" : "off");			
+	draw_panels: function(panel){
+		$("#"+panel.id).removeClass(!panel.state ? "on" : "off").addClass(panel.state ? "on" : "off");
 	},
 	setPanels: function(foo){
-		if(foo instanceof Array)	
+		if(foo instanceof Array)
 			for(var i in foo)
 				this.panels[foo[i]].setState(true);
 	},
@@ -91,8 +90,8 @@ BoardManager.board = {
 			if(this.panels[i].id == id)
 				return this.panels[i];
 		}
-	},		
-	toggle_panels: function(panel){	
+	},
+	toggle_panels: function(panel){
 		panel.toggle();
 		if(panel.north){
 		    this.panels[panel.north - 1].toggle();
@@ -147,9 +146,9 @@ LevelManager.Level = {
         BoardManager.board.resetBoard(true);
         BoardManager.board.setPanels(this.pattern);
         $(LevelManager.CurrentLevel).unbind("LEVEL_COMPLETE");
-        LevelManager.CurrentLevel = level;        
+        LevelManager.CurrentLevel = level;
         $(LevelManager.CurrentLevel).bind("LEVEL_COMPLETE", function (e) {
-            $.mobile.changePage($("#levelSummary"), "pop");            
+            $.mobile.changePage($("#levelSummary"), "pop");
         });
         BoardManager.activePanels = [];
     }
@@ -158,6 +157,7 @@ LevelManager.Level = {
 LevelManager.getLevel = function(levelId) {
     return LevelManager["Level" + levelId];
 };
+
 
 LevelManager.Level1 = {
     id: 1,
