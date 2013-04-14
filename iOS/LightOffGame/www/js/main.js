@@ -106,7 +106,8 @@ BoardManager.board = {
     if (panel.west) {
         this.panels[panel.west - 1].toggle();
     }
-    LevelManager.Level.updateMoves();
+    if(!BoardManager.freeplay)
+    	LevelManager.Level.updateMoves();
 	},
 	resetBoard: function (override) {
 	    if (LevelManager.CurrentLevel && !override) {
@@ -141,6 +142,7 @@ LevelManager.Level = {
     init: function(level) {
       BoardManager.freeplay = false;
       BoardManager.board.resetBoard(true);
+      $("#moveCounter").show();
       $(LevelManager.CurrentLevel).unbind("LEVEL_COMPLETE");
       LevelManager.CurrentLevel.id = level.id;
       LevelManager.CurrentLevel.name = level.name;

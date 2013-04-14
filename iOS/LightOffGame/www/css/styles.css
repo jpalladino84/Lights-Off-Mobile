@@ -90,7 +90,7 @@ body {
 }
 
 #game_wrapper #gameBoard{
-	background-image:url(../images/board.png);
+	/*background-image:url(../images/board.png);*/
 	width:310px;
 	height:310px;
 	margin:15px auto;

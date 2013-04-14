@@ -30,7 +30,7 @@
             </div>
         </div>
 
-        <div data-role="page" id="board">
+        <div data-role="page" id="board" data-theme="a">
             <div data-role="panel" id="optionPanel" data-display="push" data-dismissible="true" data-theme="a">
                 <a href="#home" data-icon="home" data-role="button">Home</a>
                 <a href="#resetDialog" data-icon="back" data-rel="dialog" data-transition="flip" data-role="button">Reset</a>
@@ -46,7 +46,6 @@
                     <div id="gameBoard"></div>
                     <div id="levelInfoWrapper">
                         <div id="moveCounter"></div>
-                        <div id="score"></div>
                     </div>
 
                 </div>
@@ -66,7 +65,7 @@
             </div>
         </div>
 
-        <div id="resetDialog" data-role="dialog">
+        <div id="resetDialog" data-role="dialog" data-close-btn="none">
             <div data-role="header">
                 <h1>Reset?</h1>
             </div>
@@ -77,7 +76,7 @@
             </div>
         </div>
 
-        <div id="levelSummary" data-role="dialog">
+        <div id="levelSummary" data-role="dialog" data-close-btn="none">
             <div data-role="header">
                 <h1></h1>
             </div>
@@ -103,7 +102,7 @@
             </div>
         </div>
 
-        <div id="gameSummary" data-role="dialog">
+        <div id="gameSummary" data-role="dialog" data-close-btn="none">
             <div data-role="header">
                 <h1>Game Complete</h1>
             </div>
@@ -126,7 +125,9 @@
                     $(LevelManager.CurrentLevel).unbind("LEVEL_COMPLETE");
                     BoardManager.board.resetBoard(true);
                     BoardManager.freeplay = true;
+                    $("#moveCounter").hide();
                     $.mobile.changePage('#board');
+
                 });
                 $("#Level1").on("click", function () {
                     $.mobile.changePage("#board");
