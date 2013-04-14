@@ -112,6 +112,32 @@ body {
 	float:left;
 }
 
+#levelInfoWrapper div{
+    padding:0px 10px;
+}
+
+#levelInfoWrapper div#moveCounter,
+#levelInfoWrapper div#score{
+    font-size: 22px;
+    font-weight: bold;
+}
+#starsContainer{
+    width: 100%;
+    height: 50px;
+}
+
+#starsContainer #oneStar,
+#starsContainer #twoStar,
+#starsContainer #threeStar{
+    display: none;
+}
+
+#starsContainer #oneStar img,
+#starsContainer #twoStar img,
+#starsContainer #threeStar img{
+    float: left;
+
+}
 
 
 

@@ -44,6 +44,11 @@
             <div data-role="content">
                	<div id="game_wrapper">
                     <div id="gameBoard"></div>
+                    <div id="levelInfoWrapper">
+                        <div id="moveCounter"></div>
+                        <div id="score"></div>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -74,10 +79,24 @@
 
         <div id="levelSummary" data-role="dialog">
             <div data-role="header">
-                <h1>Level Complete</h1>
+                <h1></h1>
             </div>
             <div data-role="content">
                 <p>Congratulations!</p>
+                <div id="starsContainer">
+                    <div id="oneStar">
+                        <img src="images/star.png"/>
+                    </div>
+                    <div id="twoStar">
+                        <img src="images/star.png"/>
+                        <img src="images/star.png"/>
+                    </div>
+                    <div id="threeStar">
+                        <img src="images/star.png"/>
+                        <img src="images/star.png"/>
+                        <img src="images/star.png"/>
+                    </div>
+                </div>
                 <a id="nextLevel" href="#" data-icon="arrow-r" data-role="button">Next Level</a>
                 <a id="replayLevel" href="#" data-icon="back" data-role="button">Replay Level</a>
                 <a id="homebtn" href="#" data-icon="home" data-role="button">Home</a>
@@ -148,7 +167,7 @@
         	    })
                 $("#replayLevel").on('click',function() {
                     $.mobile.changePage("#board");
-                    LevelManager.Level.init(LevelManager.CurrentLevel);
+                    LevelManager.Level.init(LevelManager.getLevel(LevelManager.CurrentLevel.id));
                 })
         	    $("#resetBtn").on("click", function () {
         	        BoardManager.board.resetBoard(false);

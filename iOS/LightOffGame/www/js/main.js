@@ -103,9 +103,10 @@ BoardManager.board = {
 		if(panel.east){
 			this.panels[panel.east-1].toggle();
 		}
-	    if (panel.west) {
-	        this.panels[panel.west - 1].toggle();
-	    }
+    if (panel.west) {
+        this.panels[panel.west - 1].toggle();
+    }
+    LevelManager.Level.updateMoves();
 	},
 	resetBoard: function (override) {
 	    if (LevelManager.CurrentLevel && !override) {
@@ -113,7 +114,7 @@ BoardManager.board = {
 	            if (this.panels[i].state)
 	                this.panels[i].reset();
 	        }
-	        LevelManager.Level.init(LevelManager.CurrentLevel);
+	        LevelManager.Level.init(LevelManager.getLevel(LevelManager.CurrentLevel.id));
 	        return;
 	    } else if (override){
 	        for (var i in this.panels) {
@@ -132,27 +133,48 @@ BoardManager.board = {
 	}
 }
 
-var LevelManager = {};
+var LevelManager = {
+	score: 0
+};
 LevelManager.CurrentLevel = {};
 LevelManager.Level = {
-    id: 0,
-    name: "",
-    score: 0,
     init: function(level) {
-        this.id = level.id;
-        this.name = level.name;
-        this.pattern = level.pattern;
+      BoardManager.freeplay = false;
+      BoardManager.board.resetBoard(true);
+      $(LevelManager.CurrentLevel).unbind("LEVEL_COMPLETE");
+      LevelManager.CurrentLevel.id = level.id;
+      LevelManager.CurrentLevel.name = level.name;
+      LevelManager.CurrentLevel.moves = level.moves;
+      LevelManager.CurrentLevel.pattern = level.pattern;
+      $(LevelManager.CurrentLevel).bind("LEVEL_COMPLETE", function (e) {
+          $.mobile.changePage($("#levelSummary"), "pop");
+          $("#levelSummary h1").html(LevelManager.CurrentLevel.name);
+          LevelManager.Level.awardStars();
+      });
+      BoardManager.board.setPanels(level.pattern);
+      $("#levelInfoWrapper div#moveCounter").html("Moves Left: " + LevelManager.CurrentLevel.moves);
+    },
+    updateMoves: function(){
+    	LevelManager.CurrentLevel.moves = LevelManager.CurrentLevel.moves - 1;
+    	$("#levelInfoWrapper div#moveCounter").html("Moves Left: " + LevelManager.CurrentLevel.moves);
+    },
+    awardStars: function(){
+    	var level = LevelManager.getLevel(LevelManager.CurrentLevel.id),
+    			currentMoves = LevelManager.CurrentLevel.moves;
 
-        BoardManager.freeplay = false;
-        BoardManager.board.resetBoard(true);
-        BoardManager.board.setPanels(this.pattern);
-        $(LevelManager.CurrentLevel).unbind("LEVEL_COMPLETE");
-        LevelManager.CurrentLevel = level;
-        $(LevelManager.CurrentLevel).bind("LEVEL_COMPLETE", function (e) {
-            $.mobile.changePage($("#levelSummary"), "pop");
-        });
-        BoardManager.activePanels = [];
-    }
+			$("#starsContainer #oneStar").hide();
+			$("#starsContainer #twoStar").hide();
+			$("#starsContainer #threeStar").hide();
+
+			if(currentMoves === 0 )
+    			$("#starsContainer #threeStar").show();
+	  	else if (currentMoves < 0 && currentMoves >= -5 )
+    			$("#starsContainer #twoStar").show();
+  		else if (currentMoves < -6)
+    			$("#starsContainer #oneStar").show();
+
+
+		}
 };
 
 LevelManager.getLevel = function(levelId) {
@@ -178,7 +200,7 @@ LevelManager.Level3 = {
     id: 3,
     name: "Level 3",
     pattern: [0, 4, 6, 8, 16, 18, 20, 24],
-    moves: 4
+    moves: 8
 }
 
 LevelManager.Level4 = {
